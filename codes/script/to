@@ -1,0 +1,52 @@
+#!/bin/bash
+if [[ $1 == "bs" ]]
+then
+    maschine="yf-cm-bdbs42.yf01"
+elif [[ $1 == "as" ]]
+then
+    maschine="tc-cm-as00.tc"     
+elif [[ $1 == "pb" ]]
+then
+    maschine="yf-cm-ui11.yf01" 
+elif [[ $1 == "945" ]]
+then
+    maschine="work@db-testing-ecom945.db01.baidu.com" 
+elif [[ $1 == "13" ]]
+then
+    maschine="tc-cm-et13.tc" 
+elif [[ $1 == "14" ]]
+then
+    maschine="tc-cm-et14.tc" 
+elif [[ $1 == "15" ]]
+then
+    maschine="tc-cm-et15.tc" 
+elif [[ $1 == "cache" ]]
+then
+    maschine="work@yf-cm-as-cache00.yf01"
+elif [[ $1 == "ks06" ]]
+then
+    maschine="cpro@tc-cp-ks06.tc"
+elif [[ $1 == "zk" ]]
+then
+    maschine="ai-cs-cc00.ai01.baidu.com"
+elif [[ $1 == "online_dev" ]]
+then
+    maschine="cpro@bb-et-gtrsp01.vm.baidu.com"
+    #passwd:cmmpm2009
+elif [[ $1 == "qtdict" ]]
+then
+    maschine="yf-cm-ufstr00.yf01.baidu.com"
+elif [[ $1 == "ufs" ]]
+then
+    maschine="db-cm-ufs-srv00.db01"
+elif [[ $1 == "esrv" ]]
+then
+    maschine="work@db-cm-ufs-esrv00.db01.baidu.com"
+elif [[ $1 == "str00" ]]
+then
+    maschine="yf-cm-ufstr00.yf01"
+else
+    maschine=$1
+fi
+ 
+ssh $maschine $cmd

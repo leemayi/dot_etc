@@ -1,0 +1,46 @@
+#edit-mode: -*- python -*-
+#coding:gbk
+
+#工作路径.
+WORKROOT('../share/dev/ufs_2_0/')
+
+#使用硬链接copy.
+CopyUsingHardLink(True)
+
+#C预处理器参数.
+CPPFLAGS('-D_GNU_SOURCE -D__STDC_LIMIT_MACROS -DVERSION=\\\"1.0.0.0\\\"')
+
+#C编译参数.
+CFLAGS('-g -pipe -W -Wall')
+
+#C++编译参数.
+CXXFLAGS('-pipe -W -Wall -Werror')
+
+#IDL编译参数
+IDLFLAGS('--compack')
+
+#UBRPC编译参数
+UBRPCFLAGS('--compack')
+
+#头文件路径.
+INCPATHS('. ./include ../include ./output ./output/include')
+
+#使用库
+#LIBS('')
+CONFIGS('app/ecom/ufs/utility/strutil@trunk@comake')
+
+#链接参数.
+LDFLAGS('-lpthread -lcrypto -lrt')
+
+#依赖模块
+ImportConfigsFrom('../share/dev/ufs_2_0/app/ecom/ufs/dep/')
+ 
+#静态库
+Application('de_baiduid',Sources(GLOB('./src/de_baiduid.cpp')), HeaderFiles(GLOB('./include/de_baiduid.h')))
+Application('mod_cookie',Sources(GLOB('./src/mod_cookie.cpp')))
+Application('join_int',Sources(GLOB('./src/join_int.cpp')))
+Application('join_str',Sources(GLOB('./src/join_str.cpp')))
+Application('word_freq',Sources(GLOB('./src/word_freq.cpp')))
+Application('gen_dmdict',Sources(GLOB('./src/gen_dmdict.cpp')))
+Application('get_domain',Sources(GLOB('./src/get_domain.cpp')))
+

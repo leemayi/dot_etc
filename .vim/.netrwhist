@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/huangjian/share/dev/bs-trunk/app/ecom/nova/se/se-lib/se-if/include'
+let g:netrw_dirhist_2='/home/huangjian/tools/nodelib/node-optimist/test/_'
+let g:netrw_dirhist_3='/home/huangjian/share/dev/ufs_2_0/app/ecom/ufs/product/qt/src'
+let g:netrw_dirhist_4='/home/huangjian/share/dev/bs-trunk/app/ecom/nova/se/se-bs/product/noahdes'
+let g:netrw_dirhist_5='/home/huangjian/share/dev/as-trunk/app/ecom/nova/se/se-as/production/conf/exp/flag_path'
+let g:netrw_dirhist_6='/home/huangjian/share/dev/as-trunk/app/ecom/nova/se/se-as/production/conf/exp/exp_path'
+let g:netrw_dirhist_7='/home/huangjian/share/dev/bs-trunk/app/ecom/nova/se/se-bs/conf/test/bd-conf/startup'
+let g:netrw_dirhist_8='/home/seraphim/.vim'
