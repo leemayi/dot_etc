@@ -16,9 +16,19 @@ tags = []    # Modified global variable!
 
 def main():
     args = sys.argv[1:]
-    for filename in args:
-        treat_file(filename)
+
+    for dir in args:
+        for parent, dirnames, filenames in os.walk(dir):
+            for file in filenames:
+                filename = os.path.join(parent, file)
+                treat_file(filename)
+
+    #for filename in args:
+    #    print filename
+    #    treat_file(filename)
+
     if tags:
+        os.path.exists('tags') and os.remove('tags')
         fp = open('tags', 'w')
         tags.sort()
         for s in tags: fp.write(s)
@@ -36,6 +46,7 @@ def treat_file(filename):
     base = os.path.basename(filename)
     if base[-3:] == '.py':
         base = base[:-3]
+        print filename
     s = base + '\t' + filename + '\t' + '1\n'
     tags.append(s)
     while 1:
