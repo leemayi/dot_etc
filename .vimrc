@@ -39,7 +39,8 @@
     set hidden " you can change buffers without saving
     " (XXX: #VIM/tpope warns the line below could break things)
     set iskeyword+=_,$,@,%,# " none of these are word dividers
-    " set mouse=a " use mouse everywhere
+    set mouse-=a " use mouse everywhere
+    set mousehide " hide the mouse cursor when typing
     set noerrorbells " don't make noise
     ""set whichwrap=b,s,h,l,<,>,~,[,] " everything wraps
     "             | | | | | | | | |
@@ -79,7 +80,7 @@
     set vb t_vb=
     set virtualedit=all
 
-    set number " turn on line numbers
+    set nonumber " turn on line numbers
     "set numberwidth=5 " We are good up to 99999 lines
     set report=0 " tell us when anything is changed via :...
     set ruler " Always show current positions along the bottom
@@ -106,6 +107,11 @@
     "              +-- full path to file in the buffer
     " colorscheme molokai " my color scheme (only works in GUI)
     " colorscheme solarized
+    " Modeline
+    set modeline
+    set modelines=5
+    set splitbelow
+    set splitright
 
 " }
 
@@ -143,6 +149,55 @@
                                    " (cleaner than default)
 " }
 
+" Plugin Management {
+    set rtp+=~/.vim/bundle/vundle
+    call vundle#rc()
+    " let Vundle manage Vundle
+    Bundle 'gmarik/vundle'
+
+    " My Bundles here:
+    "
+    " Tab alignment and Text filtering
+    Bundle 'godlygeek/tabular'
+
+    Bundle 'tpope/vim-fugitive'
+    Bundle 'Lokaltog/vim-easymotion'
+    Bundle 'mattn/zencoding-vim'
+
+    " Syntax highlight
+    Bundle "cucumber.zip"
+    Bundle "Markdown"
+
+    " (HT|X)ml tool
+    Bundle "tpope/vim-ragtag"
+ 
+    " Utility
+    Bundle "repeat.vim"
+    Bundle "surround.vim"
+    Bundle "SuperTab"
+    Bundle "file-line"
+    Bundle "Align"
+                    
+    Bundle 'L9'
+    Bundle "FuzzyFinder"
+
+    Bundle 'taglist.vim' 
+    Bundle 'c.vim' 
+    Bundle 'a.vim' 
+    Bundle 'grep.vim' 
+    Bundle 'python_fold' 
+    Bundle 'Pydiction' 
+
+
+    " ack.vim : Plugin for the Perl module / CLI script 'ack'
+    " must install: sudo apt-get install ack-grep
+    Bundle "mileszs/ack.vim"
+    noremap <LocalLeader># "ayiw:Ack <C-r>a<CR>
+    vnoremap <LocalLeader># "ay:Ack <C-r>a<CR>
+
+    " Bundle 'git://git.wincent.com/command-t.git'
+" }
+   
 " Plugin Settings {
     let b:match_ignorecase = 1 " case is stupid
     let perl_extended_vars=1 " highlight advanced perl vars
@@ -177,34 +232,37 @@
         call pathogen#infect() 
     " }
 
-    " word_complete {
-        "call DoWordComplete()
-    " }
     " cvim {
-        ""let g:C_AuthorName = 'DLord_hj'
-        ""let g:C_AuthorRef  = 'Hj'
-        ""let g:C_Email   = 'hj1986@gmail.com'
-        ""let g:C_Company  = 'Bupt.'
+        let g:C_AuthorName = 'Seraphim'
+        let g:C_AuthorRef  = 'Hj'
+        let g:C_Email   = 'hj1986@gmail.com'
+        let g:C_Company  = 'Baidu Inc.'
     " }
-    " quickfix setting {
-    ""    function QfMakeConv()
-    ""       let qflist = getqflist()
-    ""       for i in qflist
-    ""          let i.text = iconv(i.text, "cp936", "utf-8")
-    ""       endfor
-    ""       call setqflist(qflist)
-    ""    endfunction
 
-    ""    au QuickfixCmdPost make call QfMakeConv()
+    " quickfix setting {
+    "    function QfMakeConv()
+    "       let qflist = getqflist()
+    "       for i in qflist
+    "          let i.text = iconv(i.text, "cp936", "utf-8")
+    "       endfor
+    "       call setqflist(qflist)
+    "    endfunction
+    "    au QuickfixCmdPost make call QfMakeConv()
     " }
+
     " pydiction setting {
-        let g:pydiction_location='~/.vim/plugin/pydiction/complete-dict'
+        let g:pydiction_location='~/.vim/bundle/Pydiction/complete-dict'
+        if has("autocmd")
+            autocmd FileType python set complete+=k~/.vim/bundle/Pydiction/
+        endif
+        let g:pydiction_menu_height = 20 
     " }
 " }
 
 " Mappings {
 let mapleader = ","
 let g:mapleader = ","
+let maplocalleader = ","
 nmap <leader>w :w!<cr>
 map <leader>e :e! ~/.vimrc<cr>
 autocmd! bufwritepost .vimrc source ~/.vimrc
@@ -258,6 +316,13 @@ nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
+" Duplication
+vnoremap <silent> <LocalLeader>= yP
+nnoremap <silent> <LocalLeader>= YP
+ 
+" Split line(opposite to S-J joining line)
+nnoremap <silent> <C-J> gEa<CR><ESC>ew 
+ 
 inoremap ( ()<ESC>i
 inoremap ) <c-r>=ClosePair(')')<CR>
 inoremap { {}<ESC>i
@@ -280,7 +345,11 @@ map <C-a> ggVG
 " map <F4> <ESC>:cn<cr>
 " map <F3> <ESC>:cp<cr>
 map ,n <ESC>:cn<cr>
-map ,p <ESC>:cp<cr>
+map <LocalLeader>p <ESC>:cp<cr>
+
+" generate HTML version current buffer using current color scheme
+map <silent> <LocalLeader>2h :runtime! syntax/2html.vim<CR> 
+
 " }
 
 
@@ -308,6 +377,10 @@ map ,p <ESC>:cp<cr>
         au BufRead,BufNewFile *.notes set spell
     " }
     au BufNewFile,BufRead *.ahk setf ahk 
+
+    " Python {
+        au BufNewFile, BufRead *.py, .pyw setf python
+    " }
 " }
 
 " GUI Settings {
@@ -325,7 +398,6 @@ if has("gui_running")
         "              |+-- use simple dialogs rather than pop-ups
         "              +  use GUI tabs, not console style tabs
         set lines=80 " perfect size for me
-        set mousehide " hide the mouse cursor when typing
         set guioptions-=T
     " }
 
@@ -343,33 +415,8 @@ endif
 "
 " {
 "
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")} 
-"
-"
-" Python IDE
-"
-" pydiction 1.2 python auto complete
-" python auto-complete code
-" Typing the following (in insert mode):
-"   os.lis<Ctrl-n>
-" will expand to:
-"   os.listdir(
-" Python 自动补全功能，只需要反覆按 Ctrl-N 就行了
-    if has("autocmd")
-        autocmd FileType python set complete+=k~/.vim/tools/pydiction
-    endif
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
-    let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
-    " defalut g:pydiction_menu_height == 15
-    " let g:pydiction_menu_height = 20 
-"
-" Python Unittest 的一些设置
-" 可以让我们在编写 Python 代码及 unittest 测试时不需要离开 vim
-" 键入 :make 或者点击 gvim 工具条上的 make 按钮就自动执行测试用例
-    autocmd FileType python compiler pyunit
-    autocmd FileType python setlocal makeprg=python\ ./alltests.py
-    autocmd BufNewFile,BufRead test*.py setlocal makeprg=python\ %
-
-    set filetype=python
-    au BufNewFile, BufRead *.py, .pyw setf python
 " }
+
+
