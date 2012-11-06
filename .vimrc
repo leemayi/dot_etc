@@ -167,11 +167,15 @@
     " Syntax highlight
     Bundle "cucumber.zip"
     Bundle "Markdown"
+    Bundle 'wavded/vim-stylus'
+
 
     " (HT|X)ml tool
     Bundle "tpope/vim-ragtag"
  
     " Utility
+    Bundle 'scrooloose/nerdtree'
+    Bundle 'Lokaltog/vim-powerline'
     Bundle "repeat.vim"
     Bundle "surround.vim"
     Bundle "SuperTab"
@@ -256,6 +260,11 @@
             autocmd FileType python set complete+=k~/.vim/bundle/Pydiction/
         endif
         let g:pydiction_menu_height = 20 
+    " }
+    " powerline{
+        " set guifont=PowerlineSymbols\ for\ Powerline
+        set t_Co=256
+        let g:Powerline_symbols = 'fancy'
     " }
 " }
 
@@ -359,6 +368,11 @@ map <silent> <LocalLeader>2h :runtime! syntax/2html.vim<CR>
         au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
         au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2 
     " }
+    " Javascript{
+        " js standard 2 spaces, always
+        au BufRead,BufNewFile *.js set shiftwidth=2 
+        au BufRead,BufNewFile *.js set softtabstop=2 
+    " }
     " Notes {
         " I consider .notes files special, and handle them differently, I
         " should probably put this in another file
@@ -373,7 +387,6 @@ map <silent> <LocalLeader>2h :runtime! syntax/2html.vim<CR>
         au BufRead,BufNewFile *.notes set syntax=notes
         au BufRead,BufNewFile *.notes set nocursorcolumn
         au BufRead,BufNewFile *.notes set nocursorline
-        au BufRead,BufNewFile *.notes set guifont=Monaco\ 12
         au BufRead,BufNewFile *.notes set spell
     " }
     au BufNewFile,BufRead *.ahk setf ahk 
@@ -392,7 +405,7 @@ if has("gui_running")
         " colorscheme metacosm " my color scheme (only works in GUI)
         colorscheme molokai " my color scheme (only works in GUI)
         set columns=190 " perfect size for me
-        set guifont=Monaco\ 13 " My favorite font
+        " set guifont=Monaco\ 12 " My favorite font
         set guioptions=ce 
         "              ||
         "              |+-- use simple dialogs rather than pop-ups
@@ -401,22 +414,9 @@ if has("gui_running")
         set guioptions-=T
     " }
 
-    " Font Switching Binds {
-       map <F8> <ESC>:set guifont=Monaco\ 8<CR> :set lines=80<CR> :set columns=190<CR>
-       map <F9> <ESC>:set guifont=Monaco\ 10<CR>:set lines=80<CR> :set columns=190<CR>
-       map <F10> <ESC>:set guifont=Monaco\ 12<CR> :set lines=80<CR> :set columns=190<CR>
-       map <F11> <ESC>:set guifont=Monaco\ 16<CR> :set lines=80<CR> :set columns=190<CR>
-       map <F12> <ESC>:set guifont=Monaco\ 20<CR> :set lines=80<CR> :set columns=190<CR>
-    " }
 endif
 " }
 "
 "
-"
-" {
-"
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
-
-" }
 
 
